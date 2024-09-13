@@ -30,6 +30,7 @@ const setValueInCookie = ({
     .map((values) => values.join("="))
     .join("; ");
 
+  debugger;
   document.cookie = serializedCookieData;
 };
 
@@ -60,7 +61,21 @@ const collectUTMParams = () => {
     "utm_medium",
     "utm_keyword",
     "utm_content",
+    "Marketing_Opt_ln__c",
+    "UTM_Source__c",
+    "UTM_Medium__c",
+    "UTM_Content__c",
+    "UTM_Term__c",
+    "UTM Goal__c",
+    "UTM_Language__c",
+    "UTM_Model__c",
+    "UTM_Persona__c",
+    "UTM_Region__c",
+    "Landing_Page_URL",
+    "UTM_Camp_Parent",
   ];
+
+  debugger;
   const utmData = window.location.search
     .substr(1)
     .split("&")
@@ -92,9 +107,6 @@ const addHiddenFormFields = (fields) => {
   const clientId = gaCookie.split(".").slice(2).join(".");
   const gclidValue = getValueInCookie("gclid");
   const originalLocation = getValueInCookie("original_location_key");
-  const siteSpectDataLayer = window.dataLayer.find(
-    (item) => item.event === "sitespect_watts_counted"
-  );
 
   const isAlgoliaDomain = window.location.hostname.endsWith("algolia.com");
   const urlParams = new URLSearchParams(window.location.search);
@@ -122,14 +134,6 @@ const addHiddenFormFields = (fields) => {
     }
     if (key === "landing_page_url" && originalLocation) {
       newFields[field] = originalLocation;
-    }
-    if (siteSpectDataLayer) {
-      if (key === "mutiny_experience") {
-        newFields[field] = siteSpectDataLayer.campaign_name || "";
-      }
-      if (key === "mutiny_variation_name") {
-        newFields[field] = siteSpectDataLayer.variation_name || "";
-      }
     }
   }
 
@@ -165,48 +169,10 @@ const createFormRequestBody = ({ data, formId, programId }) => {
   return JSON.stringify(requestBody);
 };
 
-// Form state reducer to manage submission states
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "submitted":
-      return {
-        ...state,
-        isSubmitted: true,
-        error: false,
-      };
-    case "error":
-      return {
-        ...state,
-        error: true,
-        isSubmitted: false,
-      };
-    default:
-      return state;
-  }
-};
-
-// Function to determine if a form field should be full width
-const isFullWidth = ({ fullWidthRows, index, field }) =>
-  fullWidthRows === "all" ||
-  fullWidthRows?.includes(index + 1) ||
-  field.dataType === "htmltext" ||
-  field.dataType === "checkbox";
-
-// Function to get error message color based on the form state
-const getErrorMessageColor = (isCard, theme) => {
-  if (isCard) return "grey-900";
-  return theme === "white" ? "grey-900" : "white";
-};
-
 // Exporting relevant functions for external use if needed
-export {
-  isBrowser,
-  setValueInCookie,
-  getValueInCookie,
-  collectUTMParams,
-  addHiddenFormFields,
-  createFormRequestBody,
-  formReducer,
-  isFullWidth,
-  getErrorMessageColor,
-};
+window.isBrowser = isBrowser;
+window.setValueInCookie = setValueInCookie;
+window.getValueInCookie = getValueInCookie;
+window.collectUTMParams = collectUTMParams;
+window.addHiddenFormFields = addHiddenFormFields;
+window.createFormRequestBody = createFormRequestBody;

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UTM Tracking Test</title>
+    <script src="consolidated-utm.js"></script>
+  </head>
+  <body>
+    <h1>UTM Tracking Test</h1>
+    <form id="test-form">
+      <input type="hidden" name="utm_source__c" value="" />
+      <input type="hidden" name="utm_medium__c" value="" />
+      <input type="hidden" name="ga_client_id__c" value="" />
+      <input type="hidden" name="landing_page_url__c" value="" />
+      <button type="submit">Submit Form</button>
+    </form>
+
+    <script>
+      // Simulate a UTM URL
+      window.history.pushState(
+        {},
+        "",
+        "?utm_source=google&utm_medium=cpc&utm_campaign=test_campaign"
+      );
+
+      // Call to collect UTM parameters
+      collectUTMParams();
+
+      // Test adding UTM values to the form fields
+      const formData = {
+        utm_source__c: "",
+        utm_medium__c: "",
+        ga_client_id__c: "",
+        landing_page_url__c: "",
+      };
+      const updatedFormData = addHiddenFormFields(formData);
+      console.log("Updated Form Data:", updatedFormData);
+
+      // Form submission simulation
+      document
+        .getElementById("test-form")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+          const formId = 123; // Example form ID
+          const requestBody = createFormRequestBody({
+            data: updatedFormData,
+            formId,
+          });
+          console.log("Form Request Body:", requestBody);
+        });
+    </script>
+  </body>
+</html>
