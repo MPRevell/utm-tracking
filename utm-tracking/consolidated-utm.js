@@ -1,4 +1,5 @@
 //I've added these in case these are required as we used them in the original script/code
+// You can add these to the original location and where I have written "utm_data" you can replace it with the key you want to use
 
 const ORIGINAL_LOCATION_COOKIE_KEY = "algolia_website_original_location";
 const UTM_COOKIE_KEY = "algolia_website_utm_params";
