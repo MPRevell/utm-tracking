@@ -107,12 +107,12 @@ const addHiddenFormFields = (fields) => {
   const formFields = Object.keys(fields);
   const newFields = { ...fields };
 
-  const cookieUtms = getValueInCookie("utm_data");
+  const cookieUtms = getValueInCookie(UTM_COOKIE_KEY);
   const jsonCookie = JSON.parse(decodeURIComponent(cookieUtms || "{}"));
   const gaCookie = getValueInCookie("_ga");
   const clientId = gaCookie.split(".").slice(2).join(".");
   const gclidValue = getValueInCookie("gclid");
-  const originalLocation = getValueInCookie("original_location_key");
+  const originalLocation = getValueInCookie(ORIGINAL_LOCATION_COOKIE_KEY);
 
   const isAlgoliaDomain = window.location.hostname.endsWith("algolia.com");
   const urlParams = new URLSearchParams(window.location.search);
