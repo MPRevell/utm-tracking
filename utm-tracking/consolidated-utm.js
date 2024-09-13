@@ -1,3 +1,8 @@
+//I've added these in case these are required as we used them in the original script/code
+
+const ORIGINAL_LOCATION_COOKIE_KEY = "algolia_website_original_location";
+const UTM_COOKIE_KEY = "algolia_website_utm_params";
+
 // Helper function to check if we are in a browser environment
 const isBrowser = typeof window !== "undefined";
 
